@@ -92,3 +92,11 @@ run:
 	-e HOST_ADDR=localhost \
 	--rm \
 	${DOCKER_REPO}
+
+up:
+	docker run --cap-add=NET_ADMIN \
+	-v openvpn_conf:/opt/Dockovpn_data \
+	-p 1194:1194/udp -p 80:8080/tcp \
+	-e HOST_ADDR=$(shell curl -s https://api.ipify.org) \
+	-d --restart unless-stopped \
+	${DOCKER_REPO}
